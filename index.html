@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>정부지원금 찾기</title>
+<meta name="description" content="나이·사는 곳·분야를 고르면 지금 신청할 수 있는 정부·지자체 지원금을 마감 임박순으로 보여 드려요. 보조금24·기업마당 공고 기준.">
+<meta property="og:title" content="정부지원금 찾기">
+<meta property="og:description" content="나이·사는 곳만 고르면 지금 받을 수 있는 정부지원금을 한눈에">
+<meta property="og:type" content="website">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@800&display=swap">
+<style>
+/* Layout: one column "민원 신청서" sheet — form rows with labels, then stamped result cards */
+:root{--paper:#F4F6F9;--sheet:#FFFFFF;--ink:#17202E;--muted:#5A6476;--line:#D9DEE7;--soft:#EBEEF4;--seal:#C2362B;--seal-soft:#FBE9E7;--go:#1E4FB8;--go-ink:#FFFFFF;--chip-on:#17202E;--chip-on-ink:#FFFFFF;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11161F;--sheet:#19202C;--ink:#E7EBF2;--muted:#9AA4B5;--line:#2C3545;--soft:#222A38;--seal:#F0675B;--seal-soft:#3A2224;--go:#7FA6FF;--go-ink:#0E1420;--chip-on:#E7EBF2;--chip-on-ink:#11161F;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#11161F;--sheet:#19202C;--ink:#E7EBF2;--muted:#9AA4B5;--line:#2C3545;--soft:#222A38;--seal:#F0675B;--seal-soft:#3A2224;--go:#7FA6FF;--go-ink:#0E1420;--chip-on:#E7EBF2;--chip-on-ink:#11161F;color-scheme:dark}
+html,body{background:var(--paper)}
+body{margin:0}
+
+.jgf{--display:"Nanum Myeongjo","Batang",serif;--body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+ font-family:var(--body);color:var(--ink);background:var(--paper);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+.jgf *{box-sizing:border-box}
+.jgf .wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px;display:flex;flex-direction:column;gap:22px}
+.jgf header{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;border-bottom:2px solid var(--ink)}
+.jgf .regno{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.jgf h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,7vw,48px);line-height:1.15;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.jgf h1 em{font-style:normal;color:var(--seal)}
+.jgf .lede{margin:0;color:var(--muted);max-width:60ch}
+.jgf .form{background:var(--sheet);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column}
+.jgf .row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:14px 16px;border-top:1px solid var(--line);align-items:start}
+.jgf .row:first-child{border-top:0}
+.jgf .row>.lab{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;padding-top:6px}
+.jgf .chips{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.jgf .chip{appearance:none;border:1px solid var(--line);background:var(--sheet);color:var(--ink);font:inherit;font-size:14px;padding:6px 12px;border-radius:999px;cursor:pointer;line-height:1.3}
+.jgf .chip:hover{border-color:var(--ink)}
+.jgf .chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+.jgf .chip:focus-visible,.jgf .btn:focus-visible,.jgf input:focus-visible,.jgf a:focus-visible,.jgf .sort button:focus-visible{outline:2px solid var(--go);outline-offset:2px}
+.jgf input[type=search]{width:100%;font:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink)}
+.jgf .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--line);background:var(--soft);border-radius:0 0 6px 6px}
+.jgf .btn{appearance:none;border:0;font:inherit;font-weight:700;font-size:16px;padding:12px 26px;border-radius:4px;background:var(--go);color:var(--go-ink);cursor:pointer}
+.jgf .btn.ghost{background:transparent;color:var(--muted);font-weight:500;font-size:14px;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
+.jgf .resbar{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+.jgf .count{font-size:17px;font-weight:600;margin:0}
+.jgf .count b{font-family:var(--mono);color:var(--seal);font-size:20px}
+.jgf .sort{display:flex;gap:2px;border:1px solid var(--line);border-radius:4px;padding:2px;background:var(--sheet)}
+.jgf .sort button{appearance:none;border:0;background:transparent;font:inherit;font-size:13px;padding:5px 10px;border-radius:3px;color:var(--muted);cursor:pointer}
+.jgf .sort button[aria-pressed="true"]{background:var(--soft);color:var(--ink);font-weight:600}
+.jgf .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:12px}
+.jgf .card{position:relative;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.jgf .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--muted);padding-right:76px}
+.jgf .card h3{font-size:16px !important;color:var(--ink)}
+.jgf .tag{border:1px solid var(--line);border-radius:3px;padding:1px 7px;background:var(--paper)}
+.jgf .card h3{margin:0;font-size:17px;line-height:1.4;font-weight:700;padding-right:76px;text-wrap:balance}
+.jgf .who{margin:0;font-size:14px;color:var(--muted)}
+.jgf .what{margin:0;font-size:15px;font-weight:600}
+.jgf .foot{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:space-between;align-items:center;font-size:13px}
+.jgf .per{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.jgf .card a{color:var(--go);font-weight:600;text-decoration:none}
+.jgf .card a:hover{text-decoration:underline}
+.jgf .seal{position:absolute;top:12px;right:12px;width:64px;height:64px;border-radius:50%;border:2px solid var(--seal);color:var(--seal);display:grid;place-items:center;text-align:center;transform:rotate(-8deg);font-weight:700;line-height:1.05;background:var(--sheet)}
+.jgf .seal span{font-family:var(--mono);font-size:17px;letter-spacing:-.02em}
+.jgf .seal small{display:block;font-size:10px;font-weight:600;font-family:var(--body);margin-top:2px}
+.jgf .seal.calm{border-color:var(--line);color:var(--muted);border-style:dashed}
+.jgf .seal.calm span{font-family:var(--body);font-size:12px}
+.jgf .seal.hot{background:var(--seal-soft)}
+.jgf .pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center}
+.jgf .pager button{appearance:none;min-width:36px;height:36px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);font-family:var(--mono);font-size:13px;border-radius:4px;cursor:pointer}
+.jgf .pager button[aria-current="page"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+.jgf .pager button:disabled{opacity:.4;cursor:default}
+.jgf .empty{background:var(--sheet);border:1px dashed var(--line);border-radius:6px;padding:28px 18px;text-align:center;color:var(--muted)}
+.jgf .note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+.jgf .note p{margin:0}
+.jgf .note a{color:var(--muted)}
+.jgf .follow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.jgf .follow p{margin:0;font-weight:600}
+.jgf .follow div{display:flex;gap:8px;flex-wrap:wrap}
+.jgf .follow a{font-size:14px;color:var(--ink);text-decoration:none;border:1px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:600}
+.jgf .guide{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.jgf .steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:600;font-size:15px}
+.jgf .steps li{display:flex;align-items:center;gap:6px}
+.jgf .steps b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--seal);color:var(--sheet);font-family:var(--mono);font-size:13px}
+.jgf .fontbtn{appearance:none;font:inherit;font-size:14px;font-weight:600;border:1px solid var(--ink);background:var(--sheet);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.jgf .fontbtn span{font-family:var(--display);font-size:17px;margin-right:2px}
+.jgf .fontbtn[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+.jgf.lg .wrap{zoom:1.2}
+.jgf .big{margin:0;font-size:24px;line-height:1.25;font-weight:700;color:var(--seal);padding-right:76px;letter-spacing:-.01em;text-wrap:balance}
+.jgf .chk{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.jgf .chk li{position:relative;padding-left:24px;font-size:14.5px}
+.jgf .chk li::before{content:"";position:absolute;left:2px;top:.32em;width:14px;height:14px;border-radius:3px;background:var(--go)}
+.jgf .chk li::after{content:"";position:absolute;left:6.5px;top:calc(.32em + 3px);width:4px;height:7px;border:solid var(--sheet);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.jgf .easy{margin:0;font-size:13px;color:var(--muted);background:var(--soft);border-radius:4px;padding:6px 10px}
+.jgf .easy b{color:var(--ink);font-weight:600}
+.jgf details{border-top:1px dashed var(--line);padding-top:8px}
+.jgf summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--go);list-style:none}
+.jgf summary::-webkit-details-marker{display:none}
+.jgf summary::before{content:"＋ ";}
+.jgf details[open] summary::before{content:"－ ";}
+.jgf dl{margin:8px 0 0;display:grid;grid-template-columns:76px 1fr;gap:6px 10px;font-size:14px}
+.jgf dt{color:var(--muted);font-weight:600}
+.jgf dd{margin:0;min-width:0}
+.jgf .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:520px){.jgf .row{grid-template-columns:1fr;gap:8px}.jgf .row>.lab{padding-top:0}.jgf .actions .btn{flex:1}}
+@media (prefers-reduced-motion:no-preference){.jgf .card{animation:jgfIn .25s ease both}@keyframes jgfIn{from{transform:translateY(4px)}to{transform:none}}}
+
+</style>
+<div class="jgf" id="jgf">
+<div class="wrap">
+ <header>
+  <div class="regno"><span id="jgfDate">기준일 —</span><span id="jgfTotal">공고 —건</span><span>출처 보조금24 · 기업마당</span></div>
+  <h1>정부<em>지원금</em> 찾기</h1>
+  <p class="lede">나이와 사는 곳, 관심 분야를 고르면 지금 신청할 수 있는 정부·지자체 지원금을 마감이 가까운 순서로 보여 드려요.</p>
+  <div class="guide"><ol class="steps"><li><b>1</b>나이 고르기</li><li><b>2</b>사는 곳 고르기</li><li><b>3</b>지원금 찾기 누르기</li></ol><button type="button" class="fontbtn" id="jgfFont" aria-pressed="false"><span aria-hidden="true">가</span> 글씨 크게</button></div>
+ </header>
+
+ <form class="form" id="jgfForm" role="search" aria-label="지원금 조건 선택">
+  <div class="row"><div class="lab" id="lbAge">연령대</div><div class="chips" data-group="age" aria-labelledby="lbAge"></div></div>
+  <div class="row"><div class="lab" id="lbReg">사는 곳</div><div class="chips" data-group="reg" aria-labelledby="lbReg"></div></div>
+  <div class="row"><div class="lab" id="lbCat">분야</div><div class="chips" data-group="cat" aria-labelledby="lbCat"></div></div>
+  <div class="row"><label class="lab" for="jgfQ">검색어</label><input id="jgfQ" type="search" placeholder="예: 월세, 출산, 카드수수료" autocomplete="off"></div>
+  <div class="actions"><button type="button" class="btn ghost" id="jgfReset">조건 모두 지우기</button><button type="submit" class="btn" id="jgfGo">지원금 찾기</button></div>
+ </form>
+
+ <section aria-live="polite" style="display:flex;flex-direction:column;gap:14px">
+  <div class="resbar"><p class="count" id="jgfCount"></p>
+   <div class="sort" role="group" aria-label="정렬"><button type="button" data-sort="dl" aria-pressed="true">마감 임박순</button><button type="button" data-sort="amt" aria-pressed="false">금액 큰 순</button><button type="button" data-sort="name" aria-pressed="false">가나다순</button></div>
+  </div>
+  <div class="list" id="jgfList"></div>
+  <nav class="pager" id="jgfPager" aria-label="페이지"></nav>
+ </section>
+
+ <div class="follow"><p>새 지원금이 나오면 바로 정리해서 올려요</p><div><a href="https://www.threads.com/@keunmool" target="_blank" rel="noopener">쓰레드 @keunmool</a><a href="https://www.instagram.com/keunmool/" target="_blank" rel="noopener">인스타그램 @keunmool</a></div></div>
+
+ <div class="note">
+  <p>보조금24·기업마당에 등록된 공고를 정리한 것이라 일부 지자체 사업은 빠졌을 수 있어요. 신청 전에 꼭 공고 원문에서 자격과 기간을 확인하세요.</p>
+  <p>마감일이 지난 공고는 자동으로 숨겨져요. "(기업 신청)"이 붙은 사업은 회사가 신청하는 지원이에요.</p>
+ </div>
+</div>
+</div>
+<script>
+(function(){
+ var DATA = {"updated": "2026-10-21", "items": [{"n": "첫만남이용권", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "출생신고를 마친 아기(부모가 신청)", "what": "첫째 200만 원, 둘째 이상 300만 원 이용권", "amt": 300, "per": "상시 (2024년 이후 출생아는 생후 2년 안에 신청)", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005015", "src": "보조금24", "big": "200만~300만 원", "chk": ["아기를 낳고 출생신고를 했어요", "첫째는 200만 원, 둘째부터는 300만 원"], "how": "주민센터 방문 또는 온라인(복지로·정부24)", "tel": "출산정책과 044-202-3398"}, {"n": "고위험 임산부 의료비 지원", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "19대 고위험 임신질환으로 입원치료한 임산부 (소득 무관)", "what": "전액본인부담금·비급여 진료비의 90% 지원", "amt": null, "per": "분만일로부터 6개월 이내", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000114", "src": "보조금24", "big": "병원비 90% 지원", "chk": ["임신 중 고위험 질환으로 입원 치료를 받았어요", "소득과 상관없이 받을 수 있어요"], "how": "보건소 방문 또는 온라인 신청", "tel": "보건복지상담센터 129"}, {"n": "임산부 외래진료비 본인부담 경감", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "임신 중인 모든 임산부", "what": "외래 진료비 본인부담 10~40% 경감 (신청 필요 없음)", "amt": null, "per": "상시 · 신청 불필요", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005046", "src": "보조금24", "big": "병원비 10~40% 할인", "chk": ["지금 임신 중이에요", "신청 없이 병원에서 자동으로 깎아 줘요"], "how": "신청 필요 없음", "tel": "보건복지상담센터 129"}, {"n": "2세 미만 영유아 입원진료비 본인부담 면제", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "2세 미만 영유아", "what": "입원 진료비 본인부담금 면제 (식대 등 제외)", "amt": null, "per": "상시 · 신청 불필요", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005050", "src": "보조금24", "big": "입원비 본인부담 0원", "chk": ["아이가 만 2세가 안 됐어요", "신청 없이 자동 적용돼요 (식대 등 제외)"], "how": "신청 필요 없음", "tel": "보건복지상담센터 129"}, {"n": "임산부·영유아 영양플러스", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "기준 중위소득 80% 이하, 영양위험요인이 있는 임산부·만 6세 미만 영유아", "what": "영양교육·상담과 보충 식품 패키지 제공", "amt": null, "per": "보건소별 상이", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000005", "src": "보조금24", "big": "식품 꾸러미 + 영양 상담", "chk": ["임산부이거나 만 6세 미만 아이가 있어요", "소득이 중간 이하(중위소득 80% 이하)예요", "빈혈·저체중 등 영양 위험이 있어요"], "how": "보건소 방문 또는 정부24 온라인", "tel": "보건복지상담센터 129"}, {"n": "긴급복지 해산비", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "긴급복지 주지원을 받는 가구에서 출산(예정)한 경우", "what": "1인당 70만 원 현금 (쌍둥이 140만 원)", "amt": 140, "per": "출산 시", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005002", "src": "보조금24", "big": "70만 원 (쌍둥이 140만 원)", "chk": ["긴급복지 지원(생계·의료·주거)을 받고 있어요", "출산했거나 출산 예정이에요"], "how": "시·군·구청 방문", "tel": "보건복지상담센터 129"}, {"n": "입양축하금", "c": "출산·육아", "ages": ["전 연령"], "reg": ["전국"], "who": "2022.1.1. 이후 입양이 확정된 국내 입양 가정", "what": "1회 200만 원", "amt": 200, "per": "상시 (매월 20일 지급)", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005011", "src": "보조금24", "big": "200만 원 한 번", "chk": ["국내 입양을 했어요", "입양 확정일이 2022년 1월 1일 이후예요"], "how": "방문 신청", "tel": "보건복지상담센터 129"}, {"n": "[경북] 소상공인 출산장려 아이보듬", "c": "출산·육아", "ages": ["20대", "30대", "40대"], "reg": ["경북"], "who": "2026년에 출산한 경북 소상공인·배우자 (안동·구미·영천·경산 등 9개 시군)", "what": "대체인력 인건비 월 최대 200만 원 (6개월)", "amt": 1200, "per": "예산 소진 시까지", "dl": null, "ag": "경상북도경제진흥원", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127233", "src": "기업마당", "big": "월 최대 200만 원 × 6개월", "chk": ["경북에 살고 경북에서 가게를 해요 (지정 9개 시군)", "올해 본인이나 배우자가 출산했어요", "출산 1년 전부터 가게를 했고 연매출 1,200만 원 이상"], "how": "모바일 '모이소' 앱", "tel": "경상북도경제진흥원 1800-8730"}, {"n": "주택금융공사 월세자금보증", "c": "주거·금융", "ages": ["전 연령"], "reg": ["전국"], "who": "보증금 1억 이하·월세 60만 원 이하 월세 계약자 (우대형: 만 35세 이하 취준생·사회초년생 등)", "what": "최대 1,152만 원 범위의 월세대출 보증", "amt": null, "per": "주거안정 월세대출 규정에 따름", "dl": null, "ag": "한국주택금융공사", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/116010000001", "src": "보조금24", "big": "월세대출 보증 (최대 1,152만 원 범위)", "chk": ["보증금 1억 이하, 월세 60만 원 이하로 살아요", "만 35세 이하 취준생·사회초년생이면 우대형"], "how": "은행 방문 신청", "tel": "한국주택금융공사 1688-8114"}, {"n": "[경기] 안양시 소상공인 이자보전", "c": "주거·금융", "ages": ["전 연령"], "reg": ["경기"], "who": "안양시 사업장, 신용 6~9등급 소상공인", "what": "최대 2천만 원 대출, 연 2% 이자 5년 보전", "amt": null, "per": "상시 (대출 규모 소진 시까지)", "dl": null, "ag": "경기도 안양시", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000168", "src": "보조금24", "big": "이자 연 2% 지원 (5년)", "chk": ["안양시에서 가게를 해요", "신용등급 6~9등급이에요", "최대 2천만 원까지 대출"], "how": "경기신용보증재단 안양지점 방문", "tel": "안양시 기업경제과 031-8045-5190"}, {"n": "노인 무릎인공관절 수술 지원", "c": "노년", "ages": ["60대 이상"], "reg": ["전국"], "who": "만 60세 이상 수급자·차상위·한부모 가족", "what": "한쪽 무릎 120만 원 한도 실비 지원", "amt": 120, "per": "상시", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000113", "src": "보조금24", "big": "최대 120만 원 (한쪽 무릎)", "chk": ["만 60세 이상이에요", "수급자·차상위·한부모 가족이에요", "무릎 인공관절 수술이 필요해요"], "how": "보건소 방문", "tel": "노인의료나눔재단 1661-6595"}, {"n": "노인 안검진·개안수술", "c": "노년", "ages": ["60대 이상"], "reg": ["전국"], "who": "만 60세 이상 (수술비는 수급자·차상위·한부모)", "what": "안검진 5종, 개안수술 본인부담금 전액", "amt": null, "per": "상시", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005034", "src": "보조금24", "big": "눈 수술비 본인부담 전액", "chk": ["만 60세 이상이에요", "수술비 지원은 수급자·차상위·한부모만"], "how": "보건소 방문", "tel": "한국실명예방재단 02-718-1102"}, {"n": "보건소 방문건강관리", "c": "노년", "ages": ["60대 이상"], "reg": ["전국"], "who": "거동이 불편한 65세 이상 독거노인 등 건강취약계층", "what": "간호사·영양사 등이 집으로 찾아와 건강관리", "amt": null, "per": "보건소마다 상이", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000082", "src": "보조금24", "big": "간호사가 집으로 방문", "chk": ["거동이 불편한 65세 이상 혼자 사시는 분 등", "돈 대신 건강관리 서비스를 받아요"], "how": "보건소 방문 (보건소마다 다름)", "tel": "보건복지상담센터 129"}, {"n": "장애인 평생교육이용권", "c": "장애인", "ages": ["20대", "30대", "40대", "50대", "60대 이상"], "reg": ["전국"], "who": "19세 이상 등록 장애인 (저소득층 우선, 12,000명)", "what": "1인당 35만 원 평생교육 이용권", "amt": 35, "per": "지자체별 상이", "dl": null, "ag": "교육부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/134200005006", "src": "보조금24", "big": "35만 원 이용권", "chk": ["19세 이상 등록 장애인이에요", "저소득층이면 먼저 뽑혀요 (전국 12,000명)"], "how": "정부24 또는 지자체 방문", "tel": "상담콜센터 1668-0420"}, {"n": "장애인 차량 취득세·자동차세 면제", "c": "장애인", "ages": ["전 연령"], "reg": ["전국"], "who": "장애 정도가 심한 장애인 (세대 공동명의 1대)", "what": "취득세·자동차세 면제 (2027년 말까지)", "amt": null, "per": "시군구청별 상이", "dl": null, "ag": "행정안전부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000004", "src": "보조금24", "big": "자동차 세금 면제", "chk": ["장애 정도가 심한 장애인이에요", "본인 또는 함께 사는 가족 명의 차 1대"], "how": "시·군·구청 방문", "tel": "지방세 상담 1577-5700"}, {"n": "발달장애인 주간활동서비스", "c": "장애인", "ages": ["20대", "30대", "40대", "50대"], "reg": ["전국"], "who": "18~65세 미만 지적·자폐성 장애인 (소득 무관)", "what": "낮 활동 이용권 월 132~176시간", "amt": null, "per": "상시", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000130", "src": "보조금24", "big": "낮 활동 월 132~176시간", "chk": ["만 18~65세 미만 지적·자폐성 장애인", "소득과 상관없이 신청 가능"], "how": "주민센터 방문 또는 온라인", "tel": "보건복지상담센터 129"}, {"n": "장애인 법률구조", "c": "장애인", "ages": ["전 연령"], "reg": ["전국"], "who": "기준 중위소득 125% 이하 등록 장애인", "what": "무료 법률상담·소송대리·소송비용 지원", "amt": null, "per": "상시 (상담 132)", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000103", "src": "보조금24", "big": "소송비·변호사 무료", "chk": ["등록 장애인이에요", "소득이 중간의 125% 이하예요"], "how": "전화 132 또는 온라인", "tel": "무료법률상담 132"}, {"n": "중소기업 취업연계 장학금(희망사다리)", "c": "일자리·교육", "ages": ["20대"], "reg": ["전국"], "who": "중소·중견기업 취창업을 원하는 대학생 (일반대 3학년·전문대 2학년 이상, 직전 학기 70점 이상)", "what": "학기당 등록금 전액 + 취창업 장려금 200만 원", "amt": 200, "per": "매 학기 시작 전", "dl": null, "ag": "교육부·한국장학재단", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/134200000046", "src": "보조금24", "big": "등록금 전액 + 200만 원", "chk": ["대학생이에요 (일반대 3학년·전문대 2학년 이상)", "직전 학기 성적 70점 이상", "중소·중견기업에 취업할 생각이 있어요"], "how": "한국장학재단 온라인 (학기 시작 전)", "tel": "한국장학재단 1599-2000"}, {"n": "한국형 상병수당 시범사업", "c": "일자리·교육", "ages": ["20대", "30대", "40대", "50대", "60대 이상"], "reg": ["경기", "대구", "전북", "충북", "충남", "강원"], "who": "시범지역(안양·용인·대구 달서·익산·전주·충주·홍성·원주) 취업자, 만 15~65세 미만", "what": "아파서 일을 못 하는 날 하루 47,560원", "amt": null, "per": "상시", "dl": null, "ag": "보건복지부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005017", "src": "보조금24", "big": "하루 47,560원", "chk": ["시범지역(안양·용인·대구 달서·익산·전주·충주·홍성·원주)에서 일해요", "아파서 일을 못 하고 있어요", "만 15~65세 미만"], "how": "국민건강보험공단 온라인 또는 방문", "tel": "건강보험공단 1577-1000"}, {"n": "지방공무원 시험 응시료 면제", "c": "일자리·교육", "ages": ["전 연령"], "reg": ["전국"], "who": "수급자·차상위·한부모·장애인연금 수급자·미성년 자녀 2명 이상", "what": "지방공무원 신규 임용시험 응시 수수료 면제", "amt": null, "per": "시험 원서접수 기간", "dl": null, "ag": "행정안전부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000002", "src": "보조금24", "big": "응시료 0원", "chk": ["수급자·차상위·한부모·장애인연금 수급자", "또는 미성년 자녀가 2명 이상이에요"], "how": "원서 접수할 때 면제 선택", "tel": "지방자치단체 원서접수센터 044-205-3345"}, {"n": "[서울] 청년일자리도약장려금 (기업 신청)", "c": "일자리·교육", "ages": ["20대", "30대"], "reg": ["서울"], "who": "용산·은평·서대문·마포구 5인 이상 기업이 취업애로청년을 정규직 채용", "what": "청년 1인당 월 60만 원 × 12개월 (최대 720만 원)", "amt": 720, "per": "예산 소진 시까지", "dl": null, "ag": "고용노동부", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127200", "src": "기업마당", "big": "최대 720만 원 (회사가 받음)", "chk": ["용산·은평·서대문·마포구 회사예요", "직원 5명 이상이에요", "취업이 어려운 청년을 정규직으로 뽑았어요"], "how": "고용24 온라인 (회사가 신청)", "tel": "운영기관 070-4111-5123"}, {"n": "[경남] 김해형 근로소득 청년지원 (기업 신청)", "c": "일자리·교육", "ages": ["20대", "30대"], "reg": ["경남"], "who": "관내 대학 졸업 청년을 정규직 채용한 김해시 중소기업", "what": "청년 1인당 360만 원 일시 지급", "amt": 360, "per": "2026-10-14 ~ 2026-10-29", "dl": "2026-10-29", "ag": "김해인재양성재단", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127291", "src": "기업마당", "big": "청년 1인당 360만 원", "chk": ["김해시 중소기업이에요", "관내 대학 졸업 청년을 정규직으로 뽑았어요"], "how": "방문·우편 (김해인재양성재단)", "tel": "김해인재양성재단 055-336-9005"}, {"n": "[경남] 의령군 청년 일경험(인턴) (기업 신청)", "c": "일자리·교육", "ages": ["20대", "30대"], "reg": ["경남"], "who": "관내 청년을 채용할 의령군 소재 기업", "what": "일경험 수당 월 150만 원 × 3개월", "amt": 450, "per": "2026-10-13 ~ 2026-11-16", "dl": "2026-11-16", "ag": "경남 의령군", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127282", "src": "기업마당", "big": "월 150만 원 × 3개월", "chk": ["의령군 회사예요", "관내 청년을 인턴으로 뽑을 계획이에요"], "how": "방문·우편 (의령군 일자리팀)", "tel": "의령군 일자리팀 055-570-3142"}, {"n": "[부산] 해운대구 청년 창업자 임차료", "c": "청년 창업", "ages": ["20대", "30대"], "reg": ["부산"], "who": "1986~2007년생, 해운대구 임차 사업장 운영 (상반기 매출 5천만 원 이하)", "what": "월 임차료 20만 원 × 3개월", "amt": 60, "per": "2026-10-26 ~ 2026-11-01", "dl": "2026-11-01", "ag": "부산 해운대구", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127377", "src": "기업마당", "big": "월 20만 원 × 3개월", "chk": ["1986~2007년생이에요", "해운대구에서 가게를 빌려 장사해요", "상반기 매출 5천만 원 이하, 월세 30만 원 이상"], "how": "이메일 접수 (mihee95970@korea.kr)", "tel": "해운대구 청년지원팀 051-749-4834"}, {"n": "[전북] 익산시 청년공유주방", "c": "청년 창업", "ages": ["20대", "30대"], "reg": ["전북"], "who": "19~39세 익산시민, 외식업 창업 희망자", "what": "공유주방 임대료 50%, 설비·공과금·POS 지원", "amt": null, "per": "2026-10-12 ~ 2026-10-26", "dl": "2026-10-26", "ag": "전북 익산시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127164", "src": "기업마당", "big": "임대료 50% + 설비 지원", "chk": ["19~39세 익산시민이에요", "배달 음식 장사를 시작하려고 해요"], "how": "방문·우편·팩스·이메일", "tel": "익산시청 063-859-5454"}, {"n": "[전북] 김제전통시장 청년몰 입점", "c": "청년 창업", "ages": ["20대", "30대", "40대"], "reg": ["전북"], "who": "김제 거주 19~49세 (예비)창업자 (음식점)", "what": "청년몰 입점 + 김제시 소상공인 지원정책", "amt": null, "per": "2026-10-07 ~ 2026-10-23", "dl": "2026-10-23", "ag": "전북 김제시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127173", "src": "기업마당", "big": "청년몰 가게 입점", "chk": ["김제에 사는 19~49세예요", "음식점 창업을 준비해요"], "how": "이메일 또는 김제시청 방문", "tel": "김제시 경제진흥과 063-540-3083"}, {"n": "[제주] 제주시 청년농업인 농지임대료", "c": "청년 창업", "ages": ["20대", "30대", "40대"], "reg": ["제주"], "who": "제주시 거주, 1981~2007년생 청년농업인 (농지은행 임대차)", "what": "농지 임대료 50% 지원", "amt": null, "per": "2026-10-13 ~ 2026-11-10", "dl": "2026-11-10", "ag": "제주 제주시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127191", "src": "기업마당", "big": "농지 임대료 50%", "chk": ["제주시에 사는 1981~2007년생 농업인", "농지은행으로 땅을 빌려 농사지어요"], "how": "제주시 친환경농정과 방문", "tel": "제주 만덕콜센터 120"}, {"n": "[제주] 서귀포시 청년농업인 농지임대료", "c": "청년 창업", "ages": ["20대", "30대", "40대"], "reg": ["제주"], "who": "서귀포시 거주, 1981~2007년생 청년농업인 (농지은행 임대차)", "what": "농지 임대료 50% 지원", "amt": null, "per": "2026-10-13 ~ 2026-11-10", "dl": "2026-11-10", "ag": "제주 서귀포시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127192", "src": "기업마당", "big": "농지 임대료 50%", "chk": ["서귀포시에 사는 1981~2007년생 농업인", "농지은행으로 땅을 빌려 농사지어요"], "how": "서귀포시 친환경농정과 방문", "tel": "서귀포시 064-760-2842"}, {"n": "[경북] 청도군 청년농업인 기술창업", "c": "청년 창업", "ages": ["20대", "30대"], "reg": ["경북"], "who": "만 18~39세 청년농업인이 대표인 5인 이상 창업(예정) 단체", "what": "농업 R&D 기술 기반 창업 컨설팅·기반 조성", "amt": null, "per": "2026-10-16 ~ 2026-11-03", "dl": "2026-11-03", "ag": "경북 청도군", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127290", "src": "기업마당", "big": "창업 컨설팅·기반 지원", "chk": ["대표가 만 18~39세 청년농업인", "5명 이상 단체로 창업을 준비해요"], "how": "농업기술센터 방문", "tel": "청도군농업기술센터 054-370-6516"}, {"n": "[광주·전남] 나주형 청년 에너지 창업 사관학교", "c": "청년 창업", "ages": ["20대", "30대"], "reg": ["광주·전남"], "who": "나주 소재(예정) 예비 청년창업자·업력 7년 미만 스타트업", "what": "직·주·락·비 패키지, TIPS·R&D 기획 등", "amt": null, "per": "2026-10-19 ~ 2026-10-23", "dl": "2026-10-23", "ag": "전남테크노파크", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127326", "src": "기업마당", "big": "창업 패키지 지원", "chk": ["나주에서 창업했거나 할 예정이에요", "창업 7년이 안 된 청년 회사예요"], "how": "이메일 접수", "tel": "전남테크노파크 061-337-5049"}, {"n": "소공인 클린제조환경 조성", "c": "소상공인", "ages": ["전 연령"], "reg": ["전국"], "who": "상시근로자 10인 미만 제조업 소공인", "what": "안전장치 교체·개보수, 안전장비, 폐기물 처리 지원", "amt": null, "per": "2026-10-06 ~ 2026-10-30", "dl": "2026-10-30", "ag": "소상공인시장진흥공단", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127360", "src": "기업마당", "big": "작업장 안전시설 지원", "chk": ["직원 10명 미만 제조업 사장님이에요"], "how": "소상공인24 온라인", "tel": "중소기업통합콜센터 1357"}, {"n": "[서울] 광진구 소상공인 시설개선", "c": "소상공인", "ages": ["전 연령"], "reg": ["서울"], "who": "광진구에서 1년 이상 영업한 점포형 소상공인", "what": "시설개선 비용 최대 150만 원", "amt": 150, "per": "2026-10-14 ~ 2026-10-28", "dl": "2026-10-28", "ag": "서울신용보증재단", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127250", "src": "기업마당", "big": "최대 150만 원", "chk": ["광진구에서 1년 넘게 가게를 했어요"], "how": "서울시 소상공인 종합지원 포털", "tel": "광진종합지원센터 02-2174-4288"}, {"n": "[충남] 공주시 카드수수료 지원", "c": "소상공인", "ages": ["전 연령"], "reg": ["충남"], "who": "2025년 매출 5억 이하 공주시 카드가맹점", "what": "2025년 카드매출의 0.4~1.0% (최대 60만 원)", "amt": 60, "per": "2026-10-12 ~ 2026-10-30", "dl": "2026-10-30", "ag": "충남 공주시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127171", "src": "기업마당", "big": "최대 60만 원", "chk": ["공주시 가게예요", "작년 매출 5억 원 이하"], "how": "소상공인24 온라인 또는 행정복지센터", "tel": "공주시 경제과 041-840-8286"}, {"n": "[경북] 고령군 카드수수료 지원", "c": "소상공인", "ages": ["전 연령"], "reg": ["경북"], "who": "2025년 매출 3억 이하 고령군 소상공인", "what": "카드매출의 0.4% (5만~40만 원)", "amt": 40, "per": "예산 소진 시까지", "dl": null, "ag": "경상북도경제진흥원", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127263", "src": "기업마당", "big": "5만~40만 원", "chk": ["고령군 가게예요", "작년 매출 3억 원 이하"], "how": "행복카드.kr 온라인 또는 행정복지센터", "tel": "경상북도경제진흥원 1800-8730"}, {"n": "[강원] 평창군 세무서비스 수수료", "c": "소상공인", "ages": ["전 연령"], "reg": ["강원"], "who": "평창군 주소·사업장, 2025년 매출 3억 이하 소상공인", "what": "세무사·회계사 수수료 실비 최대 10만 원", "amt": 10, "per": "예산 소진 시까지", "dl": null, "ag": "강원 평창군", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127211", "src": "기업마당", "big": "최대 10만 원", "chk": ["평창군에 살고 평창군에서 가게를 해요", "작년 매출 3억 원 이하"], "how": "읍·면사무소 방문", "tel": "평창군 경제정책팀 033-330-2849"}, {"n": "[경북] 포항시 무료 택시지붕광고", "c": "소상공인", "ages": ["전 연령"], "reg": ["경북"], "who": "포항시 관내 소상공인", "what": "택시지붕 디지털광고 무료 송출", "amt": null, "per": "2026-10-14 ~ 2026-11-30", "dl": "2026-11-30", "ag": "경북 포항시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127287", "src": "기업마당", "big": "택시 광고 무료", "chk": ["포항시에서 가게를 해요"], "how": "네이버폼 온라인", "tel": "포항시 도시재생과 054-270-3718"}, {"n": "[전북] 김제시 1인 점포 안심벨", "c": "소상공인", "ages": ["전 연령"], "reg": ["전북"], "who": "김제시 주소·사업장 1인 점포 소상공인", "what": "안심벨 설치·안내문 부착", "amt": null, "per": "2026-10-06 ~ 2026-10-30", "dl": "2026-10-30", "ag": "전북 김제시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127157", "src": "기업마당", "big": "안심벨 무료 설치", "chk": ["김제시에서 혼자 가게를 지켜요"], "how": "김제시청 경제진흥과 방문", "tel": "김제시 경제진흥과 063-540-3978"}, {"n": "[충북] 청주시 고용선도기업", "c": "소상공인", "ages": ["전 연령"], "reg": ["충북"], "who": "최근 1년 고용 5명 이상 증가한 청주시 중소기업", "what": "경영안정자금 이자보전(3%)·지방세 세무조사 유예 등", "amt": null, "per": "2026-10-13 ~ 2026-10-23", "dl": "2026-10-23", "ag": "충북 청주시", "u": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127179", "src": "기업마당", "big": "이자 지원·세무조사 유예 등", "chk": ["청주시 중소기업이에요", "최근 1년 직원이 5명 이상 늘었어요"], "how": "청주시청 방문·우편", "tel": "청주시 경제일자리과 043-201-1365"}, {"n": "취약계층 무료 법률서비스(법률홈닥터)", "c": "생활·법률", "ages": ["전 연령"], "reg": ["전국"], "who": "기초생활수급자·장애인·범죄피해자 등 취약계층", "what": "변호사 무료 법률상담·문서 작성 조력", "amt": null, "per": "상시", "dl": null, "ag": "법무부", "u": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/127000000002", "src": "보조금24", "big": "변호사 무료 상담", "chk": ["기초생활수급자·장애인·범죄피해자 등"], "how": "온라인 또는 지자체 법률홈닥터", "tel": "법무부 인권구조과 02-2110-3824"}]};
+ var root = document.getElementById('jgf');
+ var $ = function(s){return root.querySelector(s)};
+ var AGES = ['20대','30대','40대','50대','60대 이상'];
+ var REGS = ['서울','부산','대구','인천','광주·전남','대전','울산','세종','경기','강원','충북','충남','전북','경북','경남','제주'];
+ var CATS = []; DATA.items.forEach(function(i){ if(CATS.indexOf(i.c)<0) CATS.push(i.c) });
+ var st = {age:[],reg:[],cat:[],q:'',sort:'dl',page:1};
+ var PER = 8;
+
+ function kstToday(){ var d=new Date(Date.now()+9*3600e3); return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())); }
+ var TODAY = kstToday();
+ function dday(s){ if(!s) return null; var p=s.split('-'); var t=Date.UTC(+p[0],+p[1]-1,+p[2]); return Math.round((t-TODAY.getTime())/864e5); }
+ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}) }
+
+ var live = DATA.items.filter(function(i){ var d=dday(i.dl); return d===null || d>=0; });
+ $('#jgfDate').textContent = '기준일 ' + DATA.updated.replace(/-/g,'.');
+ $('#jgfTotal').textContent = '신청 가능 공고 ' + live.length + '건';
+
+ function chips(group, list){
+  var box = root.querySelector('[data-group="'+group+'"]');
+  box.innerHTML = list.map(function(v,k){ return '<button type="button" class="chip" id="jgf-'+group+'-'+k+'" data-v="'+esc(v)+'" aria-pressed="false">'+esc(v)+'</button>' }).join('');
+  box.addEventListener('click', function(e){
+   var b = e.target.closest('.chip'); if(!b) return;
+   var v=b.getAttribute('data-v'), arr=st[group], ix=arr.indexOf(v);
+   if(ix<0) arr.push(v); else arr.splice(ix,1);
+   b.setAttribute('aria-pressed', ix<0 ? 'true':'false');
+   st.page=1; render();
+  });
+ }
+ chips('age',AGES); chips('reg',REGS); chips('cat',CATS);
+
+ function match(i){
+  if(st.age.length && i.ages.indexOf('전 연령')<0 && !st.age.some(function(a){return i.ages.indexOf(a)>=0})) return false;
+  if(st.reg.length && i.reg.indexOf('전국')<0 && !st.reg.some(function(r){return i.reg.indexOf(r)>=0})) return false;
+  if(st.cat.length && st.cat.indexOf(i.c)<0) return false;
+  if(st.q){ var h=(i.n+' '+i.who+' '+i.what+' '+i.c+' '+i.ag+' '+i.big+' '+i.chk.join(' ')).toLowerCase(); var ws=st.q.toLowerCase().split(/\s+/).filter(Boolean); if(!ws.every(function(w){return h.indexOf(w)>=0})) return false; }
+  return true;
+ }
+ function sorted(arr){
+  var a=arr.slice();
+  if(st.sort==='dl') a.sort(function(x,y){ var dx=dday(x.dl), dy=dday(y.dl); if(dx===null&&dy===null) return (y.amt||0)-(x.amt||0); if(dx===null) return 1; if(dy===null) return -1; return dx-dy; });
+  else if(st.sort==='amt') a.sort(function(x,y){ return (y.amt||0)-(x.amt||0) || ((dday(x.dl)??999)-(dday(y.dl)??999)); });
+  else a.sort(function(x,y){ return x.n.replace(/^\[[^\]]+\]\s*/,'').localeCompare(y.n.replace(/^\[[^\]]+\]\s*/,''),'ko'); });
+  return a;
+ }
+ function seal(i){
+  var d=dday(i.dl);
+  if(d!==null){ var cls = d<=7 ? 'seal hot' : 'seal'; return '<div class="'+cls+'" aria-label="마감까지 '+d+'일"><div><span>'+(d===0?'D-DAY':'D-'+d)+'</span><small>'+(d===0?'오늘 마감':'마감')+'</small></div></div>'; }
+  var t = /신청 불필요/.test(i.per) ? '신청<br>불필요' : (/예산/.test(i.per) ? '예산<br>소진 시' : '상시');
+  return '<div class="seal calm"><span>'+t+'</span></div>';
+ }
+ var EASY=[['기준 중위소득','우리나라 가구를 소득 순서로 줄 세웠을 때 딱 가운데 소득'],['중위소득','우리나라 가구를 소득 순서로 줄 세웠을 때 딱 가운데 소득'],['차상위','기초생활수급자 바로 위의 저소득층'],['수급자','기초생활보장 수급을 받는 사람'],['비급여','건강보험이 안 되는 진료비'],['본인부담','병원비 중 내가 직접 내는 몫'],['소공인','직원 10명 미만 제조업 사장님'],['업력','사업을 해 온 기간'],['예산 소진','준비된 돈이 다 떨어지면 마감'],['정규직','기간 정함 없이 계속 일하는 직원'],['농지은행','한국농어촌공사가 농지를 빌려주는 제도'],['이자보전','대출 이자 일부를 대신 내 줌'],['임차','건물이나 땅을 빌려 씀']];
+ function easy(i){ var t=i.who+' '+i.what+' '+i.per+' '+i.chk.join(' '); var seen={}, out=[]; EASY.forEach(function(e){ if(out.length<2 && t.indexOf(e[0])>=0 && !seen[e[1]]){ seen[e[1]]=1; out.push('<b>'+esc(e[0])+'</b> = '+esc(e[1])); } }); return out.length?'<p class="easy">쉬운 말 · '+out.join(' · ')+'</p>':''; }
+ function card(i){
+  var reg = i.reg.indexOf('전국')>=0 ? '전국' : i.reg.join('·');
+  return '<article class="card">'+seal(i)+
+   '<div class="meta"><span class="tag">'+esc(i.c)+'</span><span class="tag">'+esc(reg)+'</span><span>'+esc(i.ag)+'</span></div>'+
+   '<p class="big">'+esc(i.big)+'</p>'+
+   '<h3>'+esc(i.n)+'</h3>'+
+   '<p class="sr">이런 분이면 해당돼요</p><ul class="chk">'+i.chk.map(function(c){return '<li>'+esc(c)+'</li>'}).join('')+'</ul>'+
+   easy(i)+
+   '<details><summary>자세히 보기 (신청 방법·문의)</summary><dl><dt>지원 내용</dt><dd>'+esc(i.what)+'</dd><dt>공고 대상</dt><dd>'+esc(i.who)+'</dd><dt>신청 방법</dt><dd>'+esc(i.how)+'</dd><dt>문의</dt><dd>'+esc(i.tel)+'</dd><dt>신청 기간</dt><dd>'+esc(i.per)+'</dd></dl></details>'+
+   '<div class="foot"><span class="per">'+esc(i.per)+'</span><a href="'+esc(i.u)+'" target="_blank" rel="noopener">공고 원문 보기 ↗</a></div></article>';
+ }
+ function render(){
+  var res = sorted(live.filter(match));
+  var pages = Math.max(1, Math.ceil(res.length/PER)); if(st.page>pages) st.page=pages;
+  var slice = res.slice((st.page-1)*PER, st.page*PER);
+  var any = st.age.length||st.reg.length||st.cat.length||st.q;
+  $('#jgfCount').innerHTML = (any?'조건에 맞는 지원금 ':'전체 지원금 ')+'<b>'+res.length+'</b>건';
+  $('#jgfList').innerHTML = slice.length ? slice.map(card).join('') : '<div class="empty">조건에 맞는 지원금이 아직 없어요.<br>사는 곳이나 분야를 하나 줄여 보세요.</div>';
+  var p=''; if(pages>1){ p+='<button type="button" data-p="'+(st.page-1)+'" '+(st.page===1?'disabled':'')+' aria-label="이전 페이지">‹</button>'; for(var k=1;k<=pages;k++) p+='<button type="button" data-p="'+k+'" '+(k===st.page?'aria-current="page"':'')+'>'+k+'</button>'; p+='<button type="button" data-p="'+(st.page+1)+'" '+(st.page===pages?'disabled':'')+' aria-label="다음 페이지">›</button>'; }
+  $('#jgfPager').innerHTML = p;
+ }
+ $('#jgfPager').addEventListener('click', function(e){ var b=e.target.closest('button[data-p]'); if(!b||b.disabled) return; st.page=+b.getAttribute('data-p'); render(); $('#jgfCount').scrollIntoView({block:'start',behavior:'smooth'}); });
+ root.querySelector('.sort').addEventListener('click', function(e){ var b=e.target.closest('button[data-sort]'); if(!b) return; st.sort=b.getAttribute('data-sort'); root.querySelectorAll('.sort button').forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false')}); st.page=1; render(); });
+ $('#jgfQ').addEventListener('input', function(e){ st.q=e.target.value.trim(); st.page=1; render(); });
+ $('#jgfForm').addEventListener('submit', function(e){ e.preventDefault(); st.q=$('#jgfQ').value.trim(); st.page=1; render(); $('#jgfCount').scrollIntoView({block:'start',behavior:'smooth'}); });
+ $('#jgfReset').addEventListener('click', function(){ st.age=[];st.reg=[];st.cat=[];st.q='';st.page=1; $('#jgfQ').value=''; root.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed','false')}); render(); });
+ var fb=$('#jgfFont');
+ function setLg(on){ root.classList.toggle('lg',on); fb.setAttribute('aria-pressed',on?'true':'false'); fb.lastChild.textContent=on?' 글씨 보통':' 글씨 크게'; }
+ try{ if(localStorage.getItem('jgf-lg')==='1') setLg(true); }catch(e){}
+ fb.addEventListener('click',function(){ var on=!root.classList.contains('lg'); setLg(on); try{localStorage.setItem('jgf-lg',on?'1':'0')}catch(e){} });
+ render();
+})();
+</script>
+
+</body>
+</html>
