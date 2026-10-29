@@ -195,7 +195,7 @@ body{margin:0}
   function li(n){var d=new Date(n.date+'T00:00:00+09:00'),k=new Date(d.getTime()+9*3600e3);
    return '<li><span class="nd">'+(k.getUTCMonth()+1)+'/'+k.getUTCDate()+'('+D[k.getUTCDay()]+')</span><span class="nt">'+esc(n.title)+'</span>'+
     (n.summary?'<p class="ns">'+esc(n.summary)+'</p>':'')+
-    '<div class="nl">'+(n.blog?'<a href="'+esc(n.blog)+'" target="_blank" rel="noopener">📝 자세히 보기(블로그) →</a>':'')+'<a href="'+esc(n.url)+'" target="_blank" rel="noopener">원문 보기 →</a>'+(n.src?'<span>출처 '+esc(n.src)+'</span>':'')+(n.dl?'<span>마감 '+esc(n.dl.slice(5).replace('-','/'))+'</span>':'')+'</div></li>'}
+    '<div class="nl">'+'<a href="'+esc(n.blog||'https://blog.naver.com/navekeunmool')+'" target="_blank" rel="noopener">📝 블로그에서 자세히 보기 →</a>'+'<a href="'+esc(n.url)+'" target="_blank" rel="noopener">원문 보기 →</a>'+(n.src?'<span>출처 '+esc(n.src)+'</span>':'')+(n.dl?'<span>마감 '+esc(n.dl.slice(5).replace('-','/'))+'</span>':'')+'</div></li>'}
   $('#jgfNewsList').innerHTML=cur.map(li).join('');
   if(old.length){$('#jgfNewsOldList').innerHTML=old.map(li).join('');$('#jgfNewsOld').hidden=false}
   $('#jgfNews').hidden=false;
